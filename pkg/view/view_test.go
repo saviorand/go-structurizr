@@ -16,7 +16,7 @@ func TestNewView_empty(t *testing.T) {
 	out := bytes.Buffer{}
 
 	v := view.NewView().Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -59,7 +59,7 @@ func TestNewView_with_title(t *testing.T) {
 	v := view.NewView().
 		WithTitle("TITLE").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -81,7 +81,7 @@ func TestNewView_with_custom_style(t *testing.T) {
 	v := view.NewView().
 		WithComponentStyle(style).
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -111,7 +111,7 @@ func TestNewView_with_component(t *testing.T) {
 	out := bytes.Buffer{}
 
 	v := view.NewView().Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -145,7 +145,7 @@ func TestNewView_with_relation(t *testing.T) {
 	out := bytes.Buffer{}
 
 	v := view.NewView().Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -182,7 +182,7 @@ func TestNewView_with_custom_line_color(t *testing.T) {
 	v := view.NewView().
 		WithLineColor(color.White).
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -211,7 +211,7 @@ func TestNewView_with_component_of_view_tag(t *testing.T) {
 	v := view.NewView().
 		WithComponentTag("tag 1").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -240,7 +240,7 @@ func TestNewView_with_component_with_no_view_tag(t *testing.T) {
 	v := view.NewView().
 		WithComponentTag("tag 1").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -281,7 +281,7 @@ func TestNewView_with_two_joined_components_of_view_tag(t *testing.T) {
 		WithComponentTag("tag 1").
 		WithComponentTag("tag 2").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -334,7 +334,7 @@ func TestNewView_with_two_joined_components_where_one_with_no_view_tag(t *testin
 		WithComponentTag("tag 1").
 		WithComponentTag("tag 2").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -372,7 +372,7 @@ func TestNewView_with_component_of_custom_style_shape(t *testing.T) {
 	v := view.NewView().
 		WithComponentStyle(style).
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -422,7 +422,7 @@ func TestNewView_with_two_joined_components_of_view_root_tag(t *testing.T) {
 	v := view.NewView().
 		WithRootComponentTag("ROOT").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -474,7 +474,7 @@ func TestNewView_with_two_joined_components_where_one_with_no_view_root_tag(t *t
 	v := view.NewView().
 		WithRootComponentTag("ROOT").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -513,7 +513,7 @@ func TestNewView_with_component_with_no_connection_to_root(t *testing.T) {
 	v := view.NewView().
 		WithRootComponentTag("ROOT").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()
@@ -555,7 +555,7 @@ func TestNewView_creates_grouping(t *testing.T) {
 	v := view.NewView().
 		WithRootComponentTag("ROOT").
 		Build()
-	err := v.RenderStructureTo(s, &out)
+	err := v.RenderStructureTo(s, &out, nil)
 	require.NoError(t, err)
 
 	outString := out.String()

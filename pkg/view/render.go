@@ -16,13 +16,13 @@ const (
 // RenderStructureTo renders provided model.Structure into any io.Writer.
 // RenderStructureTo will return an error in case the writer
 // cannot be used.
-func (v view) RenderStructureTo(s model.Structure, w io.Writer) error {
-	out := v.render(s)
+func (v view) RenderStructureTo(s model.Structure, w io.Writer, maxLevel *int) error {
+	out := v.render(s, maxLevel)
 	_, err := w.Write([]byte(out))
 	return err
 }
 
-func (v view) render(s model.Structure) string {
+func (v view) render(s model.Structure, maxLevel *int) string {
 	sb := strings.Builder{}
 
 	sb.WriteString(buildUMLHead())
@@ -34,20 +34,20 @@ func (v view) render(s model.Structure) string {
 		sb.WriteString(buildSkinParamShape(s.id, s.backgroundColor, s.fontColor, s.borderColor, s.shape))
 	}
 
-	sb.WriteString(v.renderBody(s))
+	sb.WriteString(v.renderBody(s, maxLevel))
 	sb.WriteString(buildUMLTail())
 
 	return sb.String()
 }
 
-func (v view) renderBody(s model.Structure) string {
+func (v view) renderBody(s model.Structure, maxLevel *int) string {
 	ctx := v.newContext(s)
 
 	v.renderRootComponents(ctx)
 
 	for {
 		ctx.level++
-		rendered := v.renderNextBodyLayer(ctx)
+		rendered := v.renderNextBodyLayer(ctx, maxLevel)
 		if rendered == 0 {
 			break
 		}
@@ -96,12 +96,15 @@ func (v view) renderRootComponents(ctx *context) {
 	}
 }
 
-func (v view) renderNextBodyLayer(ctx *context) int {
+func (v view) renderNextBodyLayer(ctx *context, maxLevel *int) int {
+	// If the current level is greater than the maximum allowed level, skip the rendering entirely.
+	if maxLevel != nil && ctx.level > *maxLevel {
+		return 0
+	}
 	renderedPreviously := make(map[string]struct{})
 	for id := range ctx.renderedIDs {
 		renderedPreviously[id] = struct{}{}
 	}
-
 	for srcID := range renderedPreviously {
 		srcRelations := ctx.s.Relations[srcID]
 
@@ -115,7 +118,6 @@ func (v view) renderNextBodyLayer(ctx *context) int {
 			v.renderRelation(ctx, srcID, trgID)
 		}
 	}
-
 	componentsRendered := len(ctx.renderedIDs) - len(renderedPreviously)
 	return componentsRendered
 }

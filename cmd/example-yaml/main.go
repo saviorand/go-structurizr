@@ -24,7 +24,7 @@ func main() {
 	}()
 
 	v := buildView()
-	err = v.RenderStructureTo(svcStructure, f)
+	err = v.RenderStructureTo(svcStructure, f, nil)
 	if err != nil {
 		panic(err)
 	}

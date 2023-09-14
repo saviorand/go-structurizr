@@ -15,7 +15,7 @@ import (
 // RenderStructureTo will return an error in case the writer
 // cannot be used.
 type View interface {
-	RenderStructureTo(s model.Structure, w io.Writer) error
+	RenderStructureTo(s model.Structure, w io.Writer, maxLevel *int) error
 }
 
 type view struct {
