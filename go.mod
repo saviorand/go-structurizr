@@ -1,4 +1,5 @@
-module github.com/saviorand/go-structurizr
+module github.com/krzysztofreczek/go-structurizr
+replace github.com/krzysztofreczek/go-structurizr => github.com/saviorand/go-structurizr v1.0.0
 
 go 1.18
 
